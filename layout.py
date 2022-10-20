@@ -69,23 +69,43 @@ def description_layout():
                     "This is the Title of this Maproom",
                 ]
             ),
-            html.P(
+            html.Details(
                 [
-                    """
-                    Instructions:
-                    """
+                    html.Summary("Lesson 1: Titles and text"),
+                    html.Div([
+                        html.P(
+                            """
+                            Open layout01.py and identify where are the text for:
+                            the Navigation bar (navbar_layout);
+                            for the Title (description_layout);
+                            and change them.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Add another paragraph describing this Maproom between its Title and these Instructions.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 2.
+                            """
+                        ),
+                    ]),
                 ],
-                style={"color": "red"}
             ),
-            html.P(
-                """
-                Open layout01.py and identify where are the text for the Navigation bar; for the Title; and change them. Add another paragraph describing this Maproom between its Title and these Instructions.
-                """
-            ),
-            html.P(
-                """
-                When you are done, run maproom02.py for the next exercise
-                """
+            html.Details(
+                [
+                    html.Summary("Lesson 2: TBD"),
+                    html.Div(
+                        html.P(
+                            """
+                            tbd
+                            """
+                        ),
+                    )
+                ],
             ),
         ],
     )

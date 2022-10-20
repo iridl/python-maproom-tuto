@@ -12,7 +12,7 @@ import flask
 import dash
 import dash_bootstrap_components as dbc
 
-import layout01 as layout
+import layout
 
 CONFIG = pingrid.load_config(os.environ["CONFIG"])
 

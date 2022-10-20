@@ -1,0 +1,24 @@
+name: mr-tuto
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - dash
+  - dash-leaflet
+  - dash-bootstrap-components
+  - netcdf4
+  - numpy
+  - opencv
+  - psycopg2
+  - rasterio
+  - shapely
+  - werkzeug<2.1 # 2.1 spews warnings at dev server start
+  - xarray
+  - yaml
+  - zarr
+  - bottleneck
+  - pip
+  - pip:
+    - pyaconf
+    - queuepool

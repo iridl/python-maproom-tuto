@@ -1,0 +1,17 @@
+# App set up
+
+mode: debug # debug, devel or prod
+server: 127.0.0.1
+port: 8050
+support_email: help@iri.columbia.edu
+
+data_dir: data/
+prefix: /python_maproom
+tile_pfx: /python_maproom/tile
+map_title: Monthly Climatology Maproom
+
+vars:
+  Rainfall: rfe
+  Minimum Temperature: tmin
+  Maximum Temperature: tmax
+  Mean Temperature: tmean

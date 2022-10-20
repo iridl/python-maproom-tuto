@@ -1,8 +1,0 @@
-# App set up
-
-mode: debug # debug, devel or prod
-server: 127.0.0.1
-port: 8050
-support_email: help@iri.columbia.edu
-
-prefix: /my_first_maproom

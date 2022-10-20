@@ -12,6 +12,7 @@ or directly reference the data be loaded into the maproom.
 import dash_bootstrap_components as dbc
 from dash import html
 
+
 def app_layout():
     return dbc.Container(
         [
@@ -35,6 +36,7 @@ def app_layout():
         fluid=True,
         style={"padding-left": "0px", "padding-right": "0px"},
     )
+
     
 def navbar_layout():
     return dbc.Navbar(
@@ -57,6 +59,7 @@ def navbar_layout():
         color="gray",
         dark=True,
     )
+
     
 def description_layout():
     return dbc.Container(

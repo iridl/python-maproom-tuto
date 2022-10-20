@@ -85,7 +85,7 @@ def layout(): # Defining the function that will be called in the layout section 
                                             ),
                                             dlf.Polygon(
                                                 id="map_selected",
-                                                positions={"features": []}, #throwing an error because it needs to be initialied with data
+                                                positions=[],
                                             ),
                                             ],
                                             name="Borders",

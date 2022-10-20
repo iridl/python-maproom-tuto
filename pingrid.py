@@ -286,7 +286,7 @@ def rasterize_multipolygon(
     bg_color: Union[int, BGRA] = 0,
     shift: int = 0,
 ) -> np.ndarray:
-    for p in mp:.geoms
+    for p in mp.geoms:
         if not p.is_empty:
             rasterize_linearring(im, p.exterior, fxs, fys, line_type, fg_color, shift)
             for q in p.interiors:

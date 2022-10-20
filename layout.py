@@ -12,6 +12,8 @@ or directly reference the data be loaded into the maproom.
 import dash_bootstrap_components as dbc
 from dash import html
 
+import dash_leaflet as dlf #Lesson 2
+
 
 def app_layout():
     return dbc.Container(
@@ -30,6 +32,20 @@ def app_layout():
                             "border-width": "0px 1px 0px 0px",
                         },
                     ),
+                    #Lesson 2 starts
+                    dbc.Col(
+                        [
+                            dbc.Row(
+                                dbc.Col(
+                                    map_layout(),
+                                    width=12,
+                                    style={
+                                        "background-color": "white",
+                                    },
+                                ),
+                            ),
+                        ],
+                    ),#Lessson 2 ends
                 ],
             ),
         ],
@@ -60,6 +76,49 @@ def navbar_layout():
         dark=True,
     )
 
+
+def map_layout():
+    return dbc.Container(
+        [
+            html.H5(
+                "A Background Map",
+                style={
+                    "text-align":"center",
+                    "border-width":"1px",
+                    "border-style":"solid",
+                    "border-color":"grey",
+                    "margin-top":"3px",
+                    "margin-bottom":"3px"},
+            ),
+            dlf.Map(
+                [
+                    dlf.LayersControl(
+                        [
+                            dlf.BaseLayer(
+                                dlf.TileLayer(
+                                    url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+                                ),
+                                name="Topo",
+                                checked=True,
+                            ),
+                        ],
+                        position="topleft",
+                        id="layers_control",
+                    ),
+                    dlf.ScaleControl(
+                        imperial=False,
+                        position="bottomleft"),
+                ],
+                id="map",
+                style={
+                    "width": "100%",
+                    "height": "50vh",
+                },
+            ),
+        ],
+        fluid=True,
+    )
+    
     
 def description_layout():
     return dbc.Container(
@@ -75,7 +134,7 @@ def description_layout():
                     html.Div([
                         html.P(
                             """
-                            Open layout01.py and identify where are the text for:
+                            Open layout.py and identify where are the text for:
                             the Navigation bar (navbar_layout);
                             for the Title (description_layout);
                             and change them.
@@ -97,14 +156,46 @@ def description_layout():
             ),
             html.Details(
                 [
-                    html.Summary("Lesson 2: TBD"),
-                    html.Div(
+                    html.Summary("Lesson 2: Topo background map"),
+                    html.Div([
+                        html.P(
+                            """
+                            Open layout.py and find the commented Col component
+                            containing the map_layout.
+                            Uncomment it to make appear a background topographic map
+                            in the right pannel.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Have a look at map_layout()
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 3.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 3: Add Street background map"),
+                    html.Div([
                         html.P(
                             """
                             tbd
                             """
                         ),
-                    )
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 4.
+                            """
+                        ),
+                    ]),
                 ],
             ),
         ],

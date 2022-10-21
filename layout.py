@@ -16,13 +16,21 @@ import dash_leaflet as dlf # Lesson 2
 from dash import dcc # Lesson 4
 import xarray as xr # Lesson 6
 import numpy as np # Lesson 7
+import pingrid # Lesson 10
+import os # Lesson 10
+
+
+# Lesson 10 starts
+CONFIG = pingrid.load_config(os.environ["CONFIG"])
+DATA_DIR = CONFIG["data_dir"] # Lesson 10 ends
 
 
 def app_layout():
     
     # Lesson 6 starts
     data = xr.open_dataarray(
-        "data/CRUprcp.nc",
+        # "data/CRUprcp.nc", Lesson 10 starts
+        DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
         decode_times=False
     )
     center_of_the_map = [
@@ -496,6 +504,32 @@ def description_layout():
                             """
                             When you are done, commit your changes
                             and move on to Lesson 10.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 10: Configure data source"),
+                    html.Div([
+                        html.P(
+                            """
+                            In the config file, add a new entry for the path
+                            of the directorty where the data file is,
+                            and another entry for the filename.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Replace all instances of data file reading in
+                            maproom.py and layout.py with the strigns from config
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 11.
                             """
                         ),
                     ]),

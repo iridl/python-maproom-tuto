@@ -24,6 +24,7 @@ CONFIG = pingrid.load_config(os.environ["CONFIG"])
 # Prefixes used by URLs
 PREFIX = CONFIG["prefix"]
 TILE_PFX = CONFIG["tile_pfx"] # Lesson 5
+DATA_DIR = CONFIG["data_dir"] # Lesson 10
 
 # Defining the server and url
 SERVER = flask.Flask(__name__)
@@ -58,7 +59,8 @@ def data_tile_url_callback(variable):
 )
 def data_tiles(tz, tx, ty, variable):
     data = xr.open_dataarray(
-        "data/CRUprcp.nc",
+        # "data/CRUprcp.nc", Lesson 10 starts
+        DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
         decode_times=False
     ).rename({"X": "lon", "Y": "lat"}).isel(T=-1) # Lesson 5
     data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP # Lesson 5 

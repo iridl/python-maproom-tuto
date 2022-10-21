@@ -10,3 +10,5 @@ Python Maprooms that are also a Tutorial to learn how to make them
 * Lesson 4 : Set a Variable Dropdown menu
 
 * Lesson 5 : Add a data layer to the map
+
+* Lesson 6: Automatically center map on data

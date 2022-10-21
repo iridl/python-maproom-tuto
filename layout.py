@@ -14,9 +14,21 @@ from dash import html
 
 import dash_leaflet as dlf # Lesson 2
 from dash import dcc # Lesson 4
+import xarray as xr # Lesson 6
 
 
 def app_layout():
+    
+    # Lesson 6 starts
+    data = xr.open_dataarray(
+        "data/CRUprcp.nc",
+        decode_times=False
+    )
+    center_of_the_map = [
+        ((data["Y"][int(data["Y"].size/2)].values)),
+        ((data["X"][int(data["X"].size/2)].values))
+    ] # Lesson 6 ends
+
     return dbc.Container(
         [
             navbar_layout(),
@@ -38,7 +50,7 @@ def app_layout():
                         [
                             dbc.Row(
                                 dbc.Col(
-                                    map_layout(),
+                                    map_layout(center_of_the_map), # Lesson 6
                                     width=12,
                                     style={
                                         "background-color": "white",
@@ -107,7 +119,7 @@ def navbar_layout():
     )
 
 
-def map_layout():
+def map_layout(center_of_the_map): # Lesson 6
     return dbc.Container(
         [
             html.H5(
@@ -157,6 +169,7 @@ def map_layout():
                         position="bottomleft"),
                 ],
                 id="map",
+                center=center_of_the_map, # Lesson 6
                 style={
                     "width": "100%",
                     "height": "50vh",
@@ -334,7 +347,33 @@ def description_layout():
                         html.P(
                             """
                             When you are done, commit your changes
-                            and move on to Lesson 5.
+                            and move on to Lesson 6.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 6: Automatically center map on data"),
+                    html.Div([
+                        html.P(
+                            """
+                            Create a [lat, lon] array called center_of_the_map
+                            where lat and lon are the coordinates of the center of data
+                            and define center_of_the_map at the beginning of app_layout
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout.py, have center_of_the_map be an argument of map_layout.
+                            Then give the dlf Map component center_of_the_map as center attribute.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 6.
                             """
                         ),
                     ]),

@@ -9,8 +9,6 @@ import pandas as pd
 import xarray as xr
 from collections.abc import Iterable as CollectionsIterable
 import cv2
-import psycopg2.extensions
-from psycopg2 import sql
 import rasterio.features
 import rasterio.transform
 import shapely.geometry

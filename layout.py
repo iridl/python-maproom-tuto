@@ -12,38 +12,15 @@ or directly reference the data be loaded into the maproom.
 import dash_bootstrap_components as dbc
 from dash import html
 
-import dash_leaflet as dlf # Lesson 2
-from dash import dcc # Lesson 4
-import xarray as xr # Lesson 6
-import numpy as np # Lesson 7
-import pingrid # Lesson 10
-import os # Lesson 10
-
-
-# Lesson 10 starts
-CONFIG = pingrid.load_config(os.environ["CONFIG"])
-DATA_DIR = CONFIG["data_dir"] # Lesson 10 ends
+#import dash_leaflet as dlf # Lesson 2
+#from dash import dcc # Lesson 4
+#import xarray as xr # Lesson 6
+#import numpy as np # Lesson 7
+#import pingrid # Lesson 10
+#import os # Lesson 10
 
 
 def app_layout():
-    
-    # Lesson 6 starts
-    data = xr.open_dataarray(
-        # "data/CRUprcp.nc", Lesson 10 starts
-        DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
-        decode_times=False
-    )
-    center_of_the_map = [
-        ((data["Y"][int(data["Y"].size/2)].values)),
-        ((data["X"][int(data["X"].size/2)].values))
-    ] # Lesson 6 ends
-    # Lesson 7 starts
-    half_res_y = np.abs(data["Y"][1] - data["Y"][0]) / 2
-    half_res_x = np.abs(data["X"][1] - data["X"][0]) / 2
-    min_y = (data["Y"][[0, -1]].min() - half_res_y).values
-    max_y = (data["Y"][[0, -1]].max() + half_res_y).values
-    min_x = (data["X"][[0, -1]].min() - half_res_x).values
-    max_x = (data["X"][[0, -1]].max() + half_res_x).values # Lesson 7 ends
 
     return dbc.Container(
         [
@@ -62,24 +39,19 @@ def app_layout():
                         },
                     ),
                     #Lesson 2 starts
-                    dbc.Col(
-                        [
-                            dbc.Row(
-                                dbc.Col(
-                                    map_layout(
-                                        center_of_the_map,
-                                        min_x,
-                                        min_y,
-                                        max_x,
-                                        max_y), # Lesson 6-7
-                                    width=12,
-                                    style={
-                                        "background-color": "white",
-                                    },
-                                ),
-                            ),
-                        ],
-                    ),#Lessson 2 ends
+                    #dbc.Col(
+                    #    [
+                    #        dbc.Row(
+                    #            dbc.Col(
+                    #                map_layout(), # Lesson 6-7
+                    #                width=12,
+                    #                style={
+                    #                    "background-color": "white",
+                    #                },
+                    #            ),
+                    #        ),
+                    #    ],
+                    #),#Lessson 2 ends
                 ],
             ),
         ],
@@ -105,35 +77,34 @@ def navbar_layout():
                 ),
             ),
             # Lesson 4 starts
-            html.Div(
-                [
-                    "Variable:"
-                ],
-                style={
-                    "color": "white",
-                    "position": "relative",
-                    "display": "inline-block",
-                    "vertical-align": "top",
-                }
-            ),
-            html.Div(
-                [
-                    dcc.Dropdown(
-                        id="variable",
-                        clearable=False,
-                        options=[
-                            dict(label="Precipitation", value="prcp"),
-                            dict(label="Temperature", value="temp"), # Lesson 12
-                        ],
-                        value="prcp",
-                    )
-                ],
-                style={
-                    "display": "inline-block",
-                    "vertical-align": "top",
-                    "width": "150px",
-                }
-            ), # Lesson 4 ends
+            #html.Div(
+            #    [
+            #        "Variable:"
+            #    ],
+            #    style={
+            #        "color": "white",
+            #        "position": "relative",
+            #        "display": "inline-block",
+            #        "vertical-align": "top",
+            #    }
+            #),
+            #html.Div(
+            #    [
+            #        dcc.Dropdown(
+            #            id="variable",
+            #            clearable=False,
+            #            options=[
+            #                dict(label="Precipitation", value="prcp"),
+            #            ],
+            #            value="prcp",
+            #        )
+            #    ],
+            #    style={
+            #        "display": "inline-block",
+            #        "vertical-align": "top",
+            #        "width": "150px",
+            #    }
+            #), # Lesson 4 ends
         ],
         sticky="top",
         color="gray",
@@ -141,7 +112,7 @@ def navbar_layout():
     )
 
 
-def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
+def map_layout(): # Lesson 6-7
     return dbc.Container(
         [
             html.H5(
@@ -165,23 +136,15 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
                                 name="Topo",
                                 checked=True,
                             ),
-                            # Lesson 3 starts
-                            dlf.BaseLayer(
-                                dlf.TileLayer(
-                                    url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-                                ),
-                                name="Street",
-                                checked=False,
-                            ), # Lesson 3 ends
                             # Lesson 5 starts
-                            dlf.Overlay(
-                                dlf.TileLayer(
-                                    opacity=1,
-                                    id="data_layer"
-                                ),
-                                name="Climate",
-                                checked=True,
-                            ), # Lesson 5 ends
+                            #dlf.Overlay(
+                            #    dlf.TileLayer(
+                            #        opacity=1,
+                            #        id="data_layer"
+                            #    ),
+                            #    name="Climate",
+                            #    checked=True,
+                            #), # Lesson 5 ends
                         ],
                         position="topleft",
                         id="layers_control",
@@ -190,19 +153,8 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
                         imperial=False,
                         position="bottomright"
                     ),
-                    # Lesson 8 starts
-                    dlf.Colorbar(
-                        id="colorbar",
-                        min=0,
-                        position="bottomleft",
-                        width=300,
-                        height=10,
-                        opacity=.8,
-                    ), # Lesson 8 ends
                 ],
                 id="map",
-                center=center_of_the_map, # Lesson 6
-                maxBounds=[[min_y, min_x],[max_y, max_x]], # Lesson 7
                 style={
                     "width": "100%",
                     "height": "50vh",

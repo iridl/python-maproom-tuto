@@ -10,15 +10,10 @@ dependencies:
   - netcdf4
   - numpy
   - opencv
-  - psycopg2
   - rasterio
   - shapely
   - werkzeug<2.1 # 2.1 spews warnings at dev server start
   - xarray
-  - yaml
+  - pyyaml  # not to be confused with yaml or pyaml!
   - zarr
   - bottleneck
-  - pip
-  - pip:
-    - pyaconf
-    - queuepool

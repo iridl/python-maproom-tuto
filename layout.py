@@ -179,7 +179,17 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
                     ),
                     dlf.ScaleControl(
                         imperial=False,
-                        position="bottomleft"),
+                        position="bottomright"
+                    ),
+                    # Lesson 8 starts
+                    dlf.Colorbar(
+                        id="colorbar",
+                        min=0,
+                        position="bottomleft",
+                        width=300,
+                        height=10,
+                        opacity=.8,
+                    ), # Lesson 8 ends
                 ],
                 id="map",
                 center=center_of_the_map, # Lesson 6
@@ -317,12 +327,15 @@ def description_layout():
                         ),
                         html.P(
                             """
-                            Give the data DataArray a colormap attribute such as:
+                            Give the data DataArray a colormap attribute,
+                            as well as scale_min and scale_max attributes, such as:
                             """
                         ),
                         html.P(
                             """
                             data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP
+                            data.attrs["scale_min"] = data.min().values
+                            data.attrs["scale_max"] = data.max().values
                             """
                         ),
                         html.P(
@@ -415,7 +428,43 @@ def description_layout():
                         html.P(
                             """
                             When you are done, commit your changes
-                            and move on to Lesson 7.
+                            and move on to Lesson 8.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 8: Add the colorscale"),
+                    html.Div([
+                        html.P(
+                            """
+                            Add a dlf Colorbar component to the dlf Map with:
+                            """
+                        ),
+                        html.P(
+                            """
+                            dlf.Colorbar(
+                                id="colorbar",
+                                position="bottomleft",
+                                width=300,
+                                height=10,
+                                opacity=1,
+                            ),
+                            """
+                        ),
+                        html.P(
+                            """
+                            In maproom.py, find the set_colorbar callback.
+                            Uncomment it and make sure it is using the same
+                            colorscale, min and max values as the data ones
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 9.
                             """
                         ),
                     ]),

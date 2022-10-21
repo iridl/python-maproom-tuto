@@ -14,3 +14,5 @@ Python Maprooms that are also a Tutorial to learn how to make them
 * Lesson 6 : Automatically center map on data
 
 * Lesson 7 : Prevent dragging far from data
+
+* Lesson 8: Add the colorscale

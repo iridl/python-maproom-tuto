@@ -61,11 +61,31 @@ def data_tiles(tz, tx, ty, variable):
         decode_times=False
     ).rename({"X": "lon", "Y": "lat"}).isel(T=-1) # Lesson 5
     data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP # Lesson 5 
-    clipping = None
-    resp = pingrid.tile(data, tx, ty, tz, clipping)
+    data.attrs["scale_min"] = data.min().values
+    data.attrs["scale_max"] = data.max().values
+    resp = pingrid.tile(data, tx, ty, tz)
     return resp # Lesson 5 ends
-    
-    
+
+
+# Lesson 8 starts
+@APP.callback(
+    Output("colorbar", "colorscale"),
+    Output("colorbar", "min"),
+    Output("colorbar", "max"),
+    Input("variable", "value"),
+)
+def set_colorbar(variable):
+    data = xr.open_dataarray(
+        "data/CRUprcp.nc",
+        decode_times=False
+    ).isel(T=-1)
+    return (
+        pingrid.to_dash_colorscale(pingrid.RAINBOW_COLORMAP),
+        data.min().values,
+        data.max().values,
+    ) # Lesson 8 ends
+        
+
 if __name__ == "__main__":
     APP.run_server(
         host=CONFIG["server"],

@@ -8,3 +8,5 @@ Python Maprooms that are also a Tutorial to learn how to make them
 * Lesson 3 : Add Street background map
 
 * Lesson 4 : Set a Variable Dropdown menu
+
+* Lesson 5 : Add a data layer to the map

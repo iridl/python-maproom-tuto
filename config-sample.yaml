@@ -6,3 +6,4 @@ port: 8050
 support_email: help@iri.columbia.edu
 
 prefix: /my_first_maproom
+tile_pfx: /my_first_maproom/tile # Lesson 5

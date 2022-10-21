@@ -139,6 +139,15 @@ def map_layout():
                                 name="Street",
                                 checked=False,
                             ), # Lesson 3 ends
+                            # Lesson 5 starts
+                            dlf.Overlay(
+                                dlf.TileLayer(
+                                    opacity=1,
+                                    id="data_layer"
+                                ),
+                                name="Climate",
+                                checked=True,
+                            ), # Lesson 5 ends
                         ],
                         position="topleft",
                         id="layers_control",
@@ -255,7 +264,71 @@ def description_layout():
                         ),
                         html.P(
                             """
-                            https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all
+                            When you are done, commit your changes
+                            and move on to Lesson 4.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 5: Add a data layer to the map"),
+                    html.Div([
+                        html.P(
+                            """
+                            Read data file data/CRUprcp.nc as a DataArray
+                            renaming its X/Y dimensions to lon/lat
+                            and selecting the last time point
+                            """
+                        ),
+                        html.P(
+                            """
+                            In maproom.py, find the data_tiles function.
+                            Uncomment it and replace the data with your calculation.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Give the data DataArray a colormap attribute such as:
+                            """
+                        ),
+                        html.P(
+                            """
+                            data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP
+                            """
+                        ),
+                        html.P(
+                            """
+                            Open layout.py and find the map component.
+                            Uncomment the entries that overlays the data layer.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Open maproom.py and find the callback creating data tiles URL
+                            and uncomment it.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Open config-sample.yaml and define the tiles prefix with:
+                            """
+                        ),
+                        html.P(
+                            """
+                            tile_pfx: /my_first_maproom/tile
+                            """
+                        ),
+                        html.P(
+                            """
+                            Open maproom.py and define TILE_PFX
+                            along with other prefixes definitions with:
+                            """
+                        ),
+                        html.P(
+                            """
+                            TILE_PFX = CONFIG["tile_pfx"]
                             """
                         ),
                         html.P(

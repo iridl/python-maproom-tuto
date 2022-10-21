@@ -11,4 +11,6 @@ Python Maprooms that are also a Tutorial to learn how to make them
 
 * Lesson 5 : Add a data layer to the map
 
-* Lesson 6: Automatically center map on data
+* Lesson 6 : Automatically center map on data
+
+* Lesson 7 : Prevent dragging far from data

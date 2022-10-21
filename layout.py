@@ -15,6 +15,7 @@ from dash import html
 import dash_leaflet as dlf # Lesson 2
 from dash import dcc # Lesson 4
 import xarray as xr # Lesson 6
+import numpy as np # Lesson 7
 
 
 def app_layout():
@@ -28,6 +29,13 @@ def app_layout():
         ((data["Y"][int(data["Y"].size/2)].values)),
         ((data["X"][int(data["X"].size/2)].values))
     ] # Lesson 6 ends
+    # Lesson 7 starts
+    half_res_y = np.abs(data["Y"][1] - data["Y"][0]) / 2
+    half_res_x = np.abs(data["X"][1] - data["X"][0]) / 2
+    min_y = (data["Y"][[0, -1]].min() - half_res_y).values
+    max_y = (data["Y"][[0, -1]].max() + half_res_y).values
+    min_x = (data["X"][[0, -1]].min() - half_res_x).values
+    max_x = (data["X"][[0, -1]].max() + half_res_x).values # Lesson 7 ends
 
     return dbc.Container(
         [
@@ -50,7 +58,12 @@ def app_layout():
                         [
                             dbc.Row(
                                 dbc.Col(
-                                    map_layout(center_of_the_map), # Lesson 6
+                                    map_layout(
+                                        center_of_the_map,
+                                        min_x,
+                                        min_y,
+                                        max_x,
+                                        max_y), # Lesson 6-7
                                     width=12,
                                     style={
                                         "background-color": "white",
@@ -119,7 +132,7 @@ def navbar_layout():
     )
 
 
-def map_layout(center_of_the_map): # Lesson 6
+def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
     return dbc.Container(
         [
             html.H5(
@@ -170,6 +183,7 @@ def map_layout(center_of_the_map): # Lesson 6
                 ],
                 id="map",
                 center=center_of_the_map, # Lesson 6
+                maxBounds=[[min_y, min_x],[max_y, max_x]], # Lesson 7
                 style={
                     "width": "100%",
                     "height": "50vh",
@@ -373,7 +387,35 @@ def description_layout():
                         html.P(
                             """
                             When you are done, commit your changes
-                            and move on to Lesson 6.
+                            and move on to Lesson 7.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 7: Prevent dragging far from data"),
+                    html.Div([
+                        html.P(
+                            """
+                            Compute the longitude and latitude values
+                            of the edges of the domain and assign them to variables
+                            along with center_of_the_map
+                            """
+                        ),
+                        html.P(
+                            """
+                            Pass those 4 values to map_layout,
+                            and give the dlf Map component
+                            [[lat_min, lon_min],[lat_max, lon_max]]
+                            as maxBounds attribute.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 7.
                             """
                         ),
                     ]),

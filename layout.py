@@ -12,7 +12,8 @@ or directly reference the data be loaded into the maproom.
 import dash_bootstrap_components as dbc
 from dash import html
 
-import dash_leaflet as dlf #Lesson 2
+import dash_leaflet as dlf # Lesson 2
+from dash import dcc # Lesson 4
 
 
 def app_layout():
@@ -70,6 +71,35 @@ def navbar_layout():
                     align="center", style={"padding-left":"5px"}
                 ),
             ),
+            # Lesson 4 starts
+            html.Div(
+                [
+                    "Variable:"
+                ],
+                style={
+                    "color": "white",
+                    "position": "relative",
+                    "display": "inline-block",
+                    "vertical-align": "top",
+                }
+            ),
+            html.Div(
+                [
+                    dcc.Dropdown(
+                        id="variable",
+                        clearable=False,
+                        options=[
+                            dict(label="Precipitation", value="prcp"),
+                        ],
+                        value="prcp",
+                    )
+                ],
+                style={
+                    "display": "inline-block",
+                    "vertical-align": "top",
+                    "width": "150px",
+                }
+            ), # Lesson 4 ends
         ],
         sticky="top",
         color="gray",
@@ -101,6 +131,14 @@ def map_layout():
                                 name="Topo",
                                 checked=True,
                             ),
+                            # Lesson 3 starts
+                            dlf.BaseLayer(
+                                dlf.TileLayer(
+                                    url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+                                ),
+                                name="Street",
+                                checked=False,
+                            ), # Lesson 3 ends
                         ],
                         position="topleft",
                         id="layers_control",
@@ -186,13 +224,44 @@ def description_layout():
                     html.Div([
                         html.P(
                             """
-                            tbd
+                            Open layout.py and find where the Topo layer is defined.
+                            Add the following Street layer as another option
+                            for background mapping.
+                            """
+                        ),
+                        html.P(
+                            """
+                            https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all
                             """
                         ),
                         html.P(
                             """
                             When you are done, commit your changes
                             and move on to Lesson 4.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 4: Set a Variable Dropdown menu"),
+                    html.Div([
+                        html.P(
+                            """
+                            Open layout.py and find the navigation bar component.
+                            Uncomment the new entries that set up a Variable menu.
+                            """
+                        ),
+                        html.P(
+                            """
+                            https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 5.
                             """
                         ),
                     ]),

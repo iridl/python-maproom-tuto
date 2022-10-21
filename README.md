@@ -1,5 +1,20 @@
 # python-maproom-tuto
-Python Maprooms that are also a Tutorial to learn how to make them
+Python Maprooms that are also a Tutorial to learn how to make them.
+
+We are building Maproom Applications with [Dash](https://dash.plotly.com/introduction)
+and with [Dash-Leaflet](https://dash-leaflet.herokuapp.com/) for the mapping components.
+
+We are performing data analysis with [Xarray](https://xarray.dev/),
+[NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/)
+
+The Tutorial reviews the following Lessons. To get started, after having installed
+conda, create the tutorial environment by running:
+
+`conda env create -f environment.yml`
+
+and then activate it. Discover Lesson 1 by running the application with:
+
+`CONFIG=config-sample.yaml python maproom.py`
 
 * Lesson 1 : Titles and text
 

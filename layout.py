@@ -470,5 +470,36 @@ def description_layout():
                     ]),
                 ],
             ),
+            html.Details(
+                [
+                    html.Summary("Lesson 9: Tick colorscale every 10"),
+                    html.Div([
+                        html.P(
+                            """
+                            Add the following Output to the colorscale callback:
+                            """
+                        ),
+                        html.P(
+                            """
+                            [i for i in range(
+                                int(data.min().values),
+                                int(data.max().values) + 1
+                            ) if i % 10 == 0]
+                            """
+                        ),
+                        html.P(
+                            """
+                            Output("colorbar", "tickValues")
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 10.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
         ],
     )

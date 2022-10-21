@@ -16,3 +16,5 @@ Python Maprooms that are also a Tutorial to learn how to make them
 * Lesson 7 : Prevent dragging far from data
 
 * Lesson 8: Add the colorscale
+
+* Lesson 9: Tick colorscale every 10

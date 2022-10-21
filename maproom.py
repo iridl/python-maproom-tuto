@@ -16,6 +16,7 @@ import layout
 
 from dash.dependencies import Output, Input, State # Lesson 5
 import xarray as xr # Lesson 5
+import numpy as np # Lesson 9
 
 
 CONFIG = pingrid.load_config(os.environ["CONFIG"])
@@ -72,6 +73,7 @@ def data_tiles(tz, tx, ty, variable):
     Output("colorbar", "colorscale"),
     Output("colorbar", "min"),
     Output("colorbar", "max"),
+    Output("colorbar", "tickValues"), # Lesson 9
     Input("variable", "value"),
 )
 def set_colorbar(variable):
@@ -83,6 +85,11 @@ def set_colorbar(variable):
         pingrid.to_dash_colorscale(pingrid.RAINBOW_COLORMAP),
         data.min().values,
         data.max().values,
+        # Lesson 9 starts
+        [i for i in range(
+            int(data.min().values),
+            int(data.max().values) + 1
+        ) if i % 10 == 0] # Lesson 9 ends
     ) # Lesson 8 ends
         
 

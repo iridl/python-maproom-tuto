@@ -20,3 +20,5 @@ Python Maprooms that are also a Tutorial to learn how to make them
 * Lesson 9: Tick colorscale every 10
 
 * Lesson 10 : Configure data source
+
+* Lesson 11 : Use other data

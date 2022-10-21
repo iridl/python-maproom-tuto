@@ -535,5 +535,27 @@ def description_layout():
                     ]),
                 ],
             ),
+            html.Details(
+                [
+                    html.Summary("Lesson 11: Use other data"),
+                    html.Div([
+                        html.P(
+                            """
+                            The Maproom should work with any nc file
+                            with X, Y and T dimensions. If you have access to some,
+                            get new data for your country of interest.
+                            To make best use of the rest of the Tutorial,
+                            get 10 years of monthly data. Once you have such a file,
+                            overwrite your configuration with the new data sources.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, move on to Lesson 12.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
         ],
     )

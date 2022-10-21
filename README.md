@@ -22,3 +22,5 @@ Python Maprooms that are also a Tutorial to learn how to make them
 * Lesson 10 : Configure data source
 
 * Lesson 11 : Use other data
+
+* Lesson 12: Add another variable: temperature

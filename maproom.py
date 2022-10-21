@@ -58,9 +58,15 @@ def data_tile_url_callback(variable):
     f"{TILE_PFX}/<int:tz>/<int:tx>/<int:ty>/<variable>"
 )
 def data_tiles(tz, tx, ty, variable):
+    # Lesson 12 starts
+    if variable == "prcp":
+        data_file = CONFIG["prcp_file"]
+    else:
+        data_file = CONFIG["temp_file"] # Lesson 12 ends
     data = xr.open_dataarray(
         # "data/CRUprcp.nc", Lesson 10 starts
-        DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
+        #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
+        DATA_DIR + data_file, # Lesson 12
         decode_times=False
     ).rename({"X": "lon", "Y": "lat"}).isel(T=-1) # Lesson 5
     data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP # Lesson 5 
@@ -79,8 +85,15 @@ def data_tiles(tz, tx, ty, variable):
     Input("variable", "value"),
 )
 def set_colorbar(variable):
+    # Lesson 12 starts
+    if variable == "prcp":
+        data_file = CONFIG["prcp_file"]
+    else:
+        data_file = CONFIG["temp_file"] # Lesson 12 ends
     data = xr.open_dataarray(
-        "data/CRUprcp.nc",
+        # "data/CRUprcp.nc", Lesson 10 starts
+        #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
+        DATA_DIR + data_file, # Lesson 12
         decode_times=False
     ).isel(T=-1)
     return (

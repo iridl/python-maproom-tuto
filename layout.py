@@ -123,6 +123,7 @@ def navbar_layout():
                         clearable=False,
                         options=[
                             dict(label="Precipitation", value="prcp"),
+                            dict(label="Temperature", value="temp"), # Lesson 12
                         ],
                         value="prcp",
                     )
@@ -547,11 +548,54 @@ def description_layout():
                             To make best use of the rest of the Tutorial,
                             get 10 years of monthly data. Once you have such a file,
                             overwrite your configuration with the new data sources.
+                            Don't commit data files to git. git is a code version
+                            control tool, not a place to store data.
+                            The NY CRU data is a small sample to allow the Tutorial
+                            to stand alone. Store your data files somewhere readable.
                             """
                         ),
                         html.P(
                             """
                             When you are done, move on to Lesson 12.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 12: Add another variable: temperature"),
+                    html.Div([
+                        html.P(
+                            """
+                            Get temperature data from the same source you just
+                            got new precipitation date (or continue to work with
+                            the NY CRU data). Save the data file in same place 
+                            as precipitation one and indicate the name of the 
+                            temperature file in the config.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In the layout, go back to the dropdown menu we set up
+                            for precipitation and add a temperature option.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In maproom.py, use if/else commands to use the right
+                            data file based on the value of the dropdown choice.
+                            Note that we are also reading the precipitation file
+                            in the layout, but that is just to get lon and lat
+                            information. Here we assume both variables will come
+                            from the set set and thus have same lat/lon. So we
+                            are not changing the data reading in the layout.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 13.
                             """
                         ),
                     ]),

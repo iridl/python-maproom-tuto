@@ -41,3 +41,5 @@ and then activate it. Discover Lesson 1 by running the application with:
 * Lesson 12: Add another variable: temperature
 
 * Lesson 13 : Adjust temperature colorscale
+
+* Lesson 14 : Map Climatology for a given month

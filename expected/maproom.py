@@ -48,16 +48,17 @@ APP.layout = layout.app_layout()
 @APP.callback(
     Output("data_layer", "url"),
     Input("variable", "value"),
+    Input("month", "value"), # Lesson 14
 )
-def data_tile_url_callback(variable):
-    return f"{TILE_PFX}/{{z}}/{{x}}/{{y}}/{variable}" # Lesson 5 ends
+def data_tile_url_callback(variable, month): # Lesson 14
+    return f"{TILE_PFX}/{{z}}/{{x}}/{{y}}/{variable}/{month}" # Lesson 5 ends, 14
 
 
 # Lesson 5 starts
 @SERVER.route(
-    f"{TILE_PFX}/<int:tz>/<int:tx>/<int:ty>/<variable>"
+    f"{TILE_PFX}/<int:tz>/<int:tx>/<int:ty>/<variable>/<month>" # Lesson 14
 )
-def data_tiles(tz, tx, ty, variable):
+def data_tiles(tz, tx, ty, variable, month): # Lesson 14
     # Lesson 12 starts
     if variable == "prcp":
         data_file = CONFIG["prcp_file"]
@@ -68,7 +69,8 @@ def data_tiles(tz, tx, ty, variable):
         #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
         DATA_DIR + data_file, # Lesson 12
         decode_times=False
-    ).rename({"X": "lon", "Y": "lat"}).isel(T=-1) # Lesson 5
+    ).rename({"X": "lon", "Y": "lat"}) # .isel(T=-1) # Lesson 5, 14
+    data = data.groupby(data["T"] % 12 + 0.5).mean().sel(T=month) # Lesson 14
     data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP # Lesson 5 
     data.attrs["scale_min"] = data.min().values
     data.attrs["scale_max"] = data.max().values
@@ -83,8 +85,9 @@ def data_tiles(tz, tx, ty, variable):
     Output("colorbar", "max"),
     Output("colorbar", "tickValues"), # Lesson 9
     Input("variable", "value"),
+    Input("month", "value"), # Lesson 14
 )
-def set_colorbar(variable):
+def set_colorbar(variable, month): # Lesson 14
     # Lesson 12 starts
     if variable == "prcp":
         data_file = CONFIG["prcp_file"]
@@ -97,7 +100,8 @@ def set_colorbar(variable):
         #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
         DATA_DIR + data_file, # Lesson 12
         decode_times=False
-    ).isel(T=-1)
+    ) #.isel(T=-1) Lesson 14
+    data = data.groupby(data["T"] % 12 + 0.5).mean().sel(T=month) # Lesson 14
     return (
         pingrid.to_dash_colorscale(pingrid.RAINBOW_COLORMAP),
         data.min().values,

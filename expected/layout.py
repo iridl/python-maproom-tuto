@@ -114,6 +114,7 @@ def navbar_layout():
                     "position": "relative",
                     "display": "inline-block",
                     "vertical-align": "top",
+                    "padding": "5px",
                 }
             ),
             html.Div(
@@ -132,8 +133,51 @@ def navbar_layout():
                     "display": "inline-block",
                     "vertical-align": "top",
                     "width": "150px",
+                    "padding": "5px",
                 }
             ), # Lesson 4 ends
+            # Lesson 14 starts
+            html.Div(
+                [
+                    "Month:"
+                ],
+                style={
+                    "color": "white",
+                    "position": "relative",
+                    "display": "inline-block",
+                    "vertical-align": "top",
+                    "padding": "5px",
+                }
+            ),
+            html.Div(
+                [
+                    dcc.Dropdown(
+                        id="month",
+                        clearable=False,
+                        options=[
+                            dict(label="January", value=1),
+                            dict(label="February", value=2),
+                            dict(label="March", value=3),
+                            dict(label="April", value=4),
+                            dict(label="May", value=5),
+                            dict(label="June", value=6),
+                            dict(label="July", value=7),
+                            dict(label="August", value=8),
+                            dict(label="September", value=9),
+                            dict(label="October", value=10),
+                            dict(label="November", value=11),
+                            dict(label="December", value=12),
+                        ],
+                        value=1,
+                    )
+                ],
+                style={
+                    "display": "inline-block",
+                    "vertical-align": "top",
+                    "width": "100px",
+                    "padding": "5px",
+                }
+            ), # Lesson 14 ends
         ],
         sticky="top",
         color="gray",

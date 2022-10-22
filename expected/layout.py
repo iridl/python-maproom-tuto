@@ -174,7 +174,7 @@ def navbar_layout():
                 style={
                     "display": "inline-block",
                     "vertical-align": "top",
-                    "width": "100px",
+                    "width": "130px",
                     "padding": "5px",
                 }
             ), # Lesson 14 ends
@@ -189,7 +189,7 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
     return dbc.Container(
         [
             html.H5(
-                "A Background Map",
+                id="map_title", # Lesson 15 "A Background Map",
                 style={
                     "text-align":"center",
                     "border-width":"1px",
@@ -667,6 +667,64 @@ def description_layout():
                             """
                             When you are done, commit your changes
                             and move on to Lesson 14.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 14: Map Climatology for a given month"),
+                    html.Div([
+                        html.P(
+                            """
+                            Use Xarray to compute the climatology from
+                            the monthly data.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout's navbar, make a new dropdown menu
+                            that picks values of the dimension of your climatology.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In maproom, instead of picking the last month of data,
+                            pick the month chosen in the layout of the climatological data.
+                            Remember to do so for the map and the colorsacle.
+                            You will have to pass the dropdown menu momth value
+                            in functions and callbacks.
+                            Remember also the special case of the map
+                            that has a function to create the tiles and
+                            another to create the tiles URLs.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 15.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 15: Callback for Map Title"),
+                    html.Div([
+                        html.P(
+                            """
+                            We finished our map now. Let's create a callback
+                            for the map title to indicate the variable and 
+                            month being mapped. The map title is defined
+                            at the beginning of the map layout.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 16.
                             """
                         ),
                     ]),

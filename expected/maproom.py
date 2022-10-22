@@ -112,7 +112,35 @@ def set_colorbar(variable, month): # Lesson 14
             int(data.max().values) + 1
         ) if i % ticks_sample == 0] # Lesson 9 ends, 13
     ) # Lesson 8 ends
-        
+
+
+# Lesson 15 starts
+@APP.callback(
+    Output("map_title", "children"),\
+    Input("variable", "value"),
+    Input("month", "value"),
+)
+def write_map_title(variable, month):
+    if variable == "prcp":
+        variable = "Precipitation"
+    else:
+        variable = "Temperature"
+    month_label = {
+        1: "January",
+        2: "February",
+        3: "March",
+        4: "April",
+        5: "May",
+        6: "June",
+        7: "July",
+        8: "August",
+        9: "september",
+        10: "October",
+        11: "November",
+        12: "December",
+    }
+    return f'{variable} Climatology in {month_label[month]}' # Lesson 15 ends
+    
 
 if __name__ == "__main__":
     APP.run_server(

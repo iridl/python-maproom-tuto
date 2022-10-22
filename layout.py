@@ -619,5 +619,26 @@ def description_layout():
                     ]),
                 ],
             ),
+            html.Details(
+                [
+                    html.Summary("Lesson 15: Callback for Map Title"),
+                    html.Div([
+                        html.P(
+                            """
+                            We finished our map now. Let's create a callback
+                            for the map title to indicate the variable and 
+                            month being mapped. The map title is defined
+                            at the beginning of the map layout.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 16.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
         ],
     )

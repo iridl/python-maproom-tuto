@@ -88,8 +88,10 @@ def set_colorbar(variable):
     # Lesson 12 starts
     if variable == "prcp":
         data_file = CONFIG["prcp_file"]
+        ticks_sample = 10 # Lesson 13
     else:
         data_file = CONFIG["temp_file"] # Lesson 12 ends
+        ticks_sample = 1 # Lesson 13
     data = xr.open_dataarray(
         # "data/CRUprcp.nc", Lesson 10 starts
         #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
@@ -104,7 +106,7 @@ def set_colorbar(variable):
         [i for i in range(
             int(data.min().values),
             int(data.max().values) + 1
-        ) if i % 10 == 0] # Lesson 9 ends
+        ) if i % ticks_sample == 0] # Lesson 9 ends, 13
     ) # Lesson 8 ends
         
 

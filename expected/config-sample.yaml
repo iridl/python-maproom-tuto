@@ -9,6 +9,6 @@ prefix: /my_first_maproom
 tile_pfx: /my_first_maproom/tile # Lesson 5
 
 # Lesson 10 starts
-data_dir: data/
+data_dir: ../data/
 prcp_file: CRUprcp.nc # Lesson 10 ends
 temp_file: CRUtemp.nc # Lesson 12

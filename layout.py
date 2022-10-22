@@ -561,5 +561,24 @@ def description_layout():
                     ]),
                 ],
             ),
+            html.Details(
+                [
+                    html.Summary("Lesson 13: Adjust temperature colorscale"),
+                    html.Div([
+                        html.P(
+                            """
+                            Study how the ticks of the precipitation colorscale
+                            are set up and adapt the temperature one to be more useful
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 14.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
         ],
     )

@@ -86,6 +86,7 @@ def navbar_layout():
             #        "position": "relative",
             #        "display": "inline-block",
             #        "vertical-align": "top",
+            #        "padding": "5px",
             #    }
             #),
             #html.Div(
@@ -103,6 +104,7 @@ def navbar_layout():
             #        "display": "inline-block",
             #        "vertical-align": "top",
             #        "width": "150px",
+            #        "padding": "5px",
             #    }
             #), # Lesson 4 ends
         ],
@@ -575,6 +577,43 @@ def description_layout():
                             """
                             When you are done, commit your changes
                             and move on to Lesson 14.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 14: Map Climatology for a given month"),
+                    html.Div([
+                        html.P(
+                            """
+                            Use Xarray to compute the climatology from
+                            the monthly data.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout's navbar, make a new dropdown menu
+                            that picks values of the dimension of your climatology.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In maproom, instead of picking the last month of data,
+                            pick the month chosen in the layout of the climatological data.
+                            Remember to do so for the map and the colorsacle.
+                            You will have to pass the dropdown menu momth value
+                            in functions and callbacks.
+                            Remember also the special case of the map
+                            that has a function to create the tiles and
+                            another to create the tiles URLs.
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 15.
                             """
                         ),
                     ]),

@@ -771,5 +771,166 @@ def description_layout():
                     ]),
                 ],
             ),
+            html.Details(
+                [
+                    html.Summary("Lesson 17: Plot Local Climatology"),
+                    html.Div([
+                        html.P(
+                            """
+                            Now that we can get a specific location from
+                            the map, we can plot the climatology for that
+                            very location. We're going to plot that under
+                            the map. Insert the following Row component
+                            as a new Row under the map in the main layout:
+                            """
+                        ),
+                        html.Code(html.Pre([
+                            'dbc.Row(',
+                            html.Br(),
+                            '    [',
+                            html.Br(),
+                            '        dbc.Col(',
+                            html.Br(),
+                            '            local_layout(),',
+                            html.Br(),
+                            '            width=12,',
+                            html.Br(),
+                            '            style={',
+                            html.Br(),
+                            '                "background-color": "white",',
+                            html.Br(),
+                            '                "min-height": "100px",',
+                            html.Br(),
+                            '                "border-style": "solid",',
+                            html.Br(),
+                            '                "border-color": "lightGray",',
+                            html.Br(),
+                            '                "border-width": "1px 0px 0px 0px",',
+                            html.Br(),
+                            '            },',
+                            html.Br(),
+                            '        ),',
+                            html.Br(),
+                            '    ],',
+                            html.Br(),
+                            '    style={',
+                            html.Br(),
+                            '        "overflow":"scroll","height":"55%"',
+                            html.Br(),
+                            '    },',
+                            html.Br(),
+                            '    className="g-0",',
+                            html.Br(),
+                            '),',
+                        ])),
+                        html.P(
+                            """
+                            You can see that this relies on a new layout
+                            component called local_layout. Let set that
+                            one up with the following definition:
+                            """
+                        ),
+                        html.Code(html.Pre([
+                            'def local_layout():',
+                            html.Br(),
+                            '    return html.Div(',
+                            html.Br(),
+                            '        [',
+                            html.Br(),
+                            '            dbc.Tabs(',
+                            html.Br(),
+                            '                [',
+                            html.Br(),
+                            '                    dbc.Tab(',
+                            html.Br(),
+                            '                        [',
+                            html.Br(),
+                            '                            dbc.Spinner(dcc.Graph(id="clim_plot")),',
+                            html.Br(),
+                            '                        ],',
+                            html.Br(),
+                            '                        label="Monthly Climatology",',
+                            html.Br(),
+                            '                    ),',
+                            html.Br(),
+                            '                ],',
+                            html.Br(),
+                            '                className="mt-4",',
+                            html.Br(),
+                            '            ),',
+                            html.Br(),
+                            '        ],',
+                            html.Br(),
+                            '    )',
+                        ])),
+                        html.P(
+                            """
+                            And now you can see that this layout component
+                            relies on the id clim_plot where we need to
+                            create our dcc Graph.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Create a callback that outputs clim_plot as a
+                            figure, and takes as inputs the poistion of
+                            loc_marker and the value of variable.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Start by reading the data and compute its
+                            climatology. Then use our pingrid sel_snap to
+                            select the data for the chosen location. Here
+                            is a reminder of sel_snap syntax:
+                            """
+                        ),
+                        html.Code(html.Pre([
+                            'data = pingrid.sel_snap(data, lat, lng)'
+                        ])),
+                        html.P(
+                            """
+                            Then we want to indicate what the x-axis are,
+                            for instance with:
+                            """
+                        ),
+                        html.Code(html.Pre([
+                            'months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",',
+                            html.Br(),
+                            '          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]',
+                        ])),
+                        html.P(
+                            """
+                            And finally we want to return a bar plot,
+                            here is an example of what it could looke like
+                            using plotly.express library:
+                            """
+                        ),
+                        html.Code(html.Pre([
+                            'bar_plot = px.bar(',
+                            html.Br(),
+                            '    data, x=months, y=data,',
+                            html.Br(),
+                            '    title = f"{variable} monthly climatology",',
+                            html.Br(),
+                            '    labels = {',
+                            html.Br(),
+                            '        "x": "Time (months)",',
+                            html.Br(),
+                            '        "y": f"{variable} ({data.attrs["units"]})",',
+                            html.Br(),
+                            '    },',
+                            html.Br(),
+                            ')',
+                        ])),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 18.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
         ],
     )

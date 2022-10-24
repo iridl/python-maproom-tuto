@@ -17,6 +17,7 @@ import layout
 from dash.dependencies import Output, Input, State # Lesson 5
 import xarray as xr # Lesson 5
 import numpy as np # Lesson 9
+import plotly.express as px # Lesson 17
 
 
 CONFIG = pingrid.load_config(os.environ["CONFIG"])
@@ -176,7 +177,41 @@ def pick_location(n_clicks, click_lat_lng, latitude, longitude):
             lat = lat
             lng = lng
     return [lat, lng], lat, lng # Lesson 16 ends
-        
+
+
+# Lesson 17 starts
+@APP.callback(
+    Output("clim_plot", "figure"),
+    Input("loc_marker", "position"),
+    Input("variable", "value")
+)
+def create_plot(marker_loc, variable):
+    lat = marker_loc[0]
+    lng = marker_loc[1]
+    if variable == "prcp":
+        data_file = CONFIG["prcp_file"]
+        variable = "Precipition"
+    else:
+        data_file = CONFIG["temp_file"]
+        variable = "Temperature"
+    data = xr.open_dataarray(
+        DATA_DIR + data_file,
+        decode_times=False,
+    )
+    data = data.groupby(data["T"] % 12 + 0.5).mean()
+    data = pingrid.sel_snap(data, lat, lng)
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    bar_plot = px.bar(
+        data, x=months, y=data,
+        title = f"{variable} monthly climatology",
+        labels = {
+            "x": "Time (months)",
+            "y": f"{variable} ({data.attrs['units']})",
+        },
+    )
+    return bar_plot # Lesson 17 ends
+
 
 if __name__ == "__main__":
     APP.run_server(

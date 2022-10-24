@@ -640,5 +640,111 @@ def description_layout():
                     ]),
                 ],
             ),
+            html.Details(
+                [
+                    html.Summary("Lesson 16: Location Selection"),
+                    html.Div([
+                        html.P(
+                            """
+                            We fare going to set up a Marker to pick
+                            locations. The Marker will snap to the center
+                            of the data gridbox it was clicked in.
+                            Additionally, we will put up input text boxes
+                            controls to also select longitude and
+                            latitude by typing-in. 
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout's map component, add a dlf
+                            LayersGroup that will contain the Marker. Put
+                            it after the LayersControl as:
+                            """
+                        ),
+                        html.P(
+                            """
+                            dlf.LayerGroup(
+                                [
+                                    dlf.Marker(
+                                        id="loc_marker",
+                                        position=center_of_the_map,
+                                    )
+                                ],
+                                id="layers_group",
+                            ),
+                            """
+                        ),
+                        html.P(
+                            """
+                            Note that we are using center_of_the_map that
+                            we used earlier to center the map over our
+                            data to give a default position to the Marker.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout's description component, we will
+                            add, after out text describing the Maproom
+                            the type-in controls as another mean to input
+                            latitude and longitude. We will use our UI
+                            component Block to make sure they keep tight
+                            together in the app. Below is an example
+                            adding the latitude control. Add that and
+                            include in another Col in the Block a control
+                            for longitude.
+                            """
+                        ),
+                        
+                        html.P(
+                            """
+                            Now that we have our Marker and control ready,
+                            in maproom, find the callback for
+                            pick_location and uncomment it. Note that we
+                            need to read data here again to get the data's
+                            longitude and latitude. Make sure the data
+                            reading is in accordance with the current
+                            state of your maproom.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Block("Pick a point",
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            dbc.FormFloating(
+                                                [
+                                                    dbc.Input(
+                                                        id="lat_input",
+                                                        min=lat_min,
+                                                        max=lat_max,
+                                                        type="number",
+                                                    ),
+                                                    dbc.Label(
+                                                        "Latitude",
+                                                        style={"font-size": "80%"},
+                                                    ),
+                                                ]
+                                            ),
+                                        ),
+                                        dbc.Button(
+                                            id="submit_lat_lng",
+                                            n_clicks=0,
+                                            children='Submit'
+                                        ),
+                                    ],
+                                ),
+                            ),
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 17.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
         ],
     )

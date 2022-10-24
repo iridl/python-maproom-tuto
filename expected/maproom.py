@@ -140,7 +140,43 @@ def write_map_title(variable, month):
         12: "December",
     }
     return f'{variable} Climatology in {month_label[month]}' # Lesson 15 ends
-    
+
+
+# Lesson 16 starts
+@APP.callback(
+    Output("loc_marker", "position"),
+    Output("lat_input", "value"),
+    Output("lng_input", "value"),
+    Input("submit_lat_lng","n_clicks"),
+    Input("map", "click_lat_lng"),
+    State("lat_input", "value"),
+    State("lng_input", "value")
+)
+def pick_location(n_clicks, click_lat_lng, latitude, longitude):
+    # Reading
+    data = xr.open_dataarray(
+        DATA_DIR + CONFIG["prcp_file"],
+        decode_times=False,
+    )
+    if dash.ctx.triggered_id == None:
+        lat = data["Y"][int(data["Y"].size/2)].values
+        lng = data["X"][int(data["X"].size/2)].values
+    else:
+        if dash.ctx.triggered_id == "map":
+            lat = click_lat_lng[0]
+            lng = click_lat_lng[1]
+        else:
+            lat = latitude
+            lng = longitude
+        try:
+            nearest_grid = pingrid.sel_snap(data, lat, lng)
+            lat = nearest_grid["Y"].values
+            lng = nearest_grid["X"].values
+        except KeyError:
+            lat = lat
+            lng = lng
+    return [lat, lng], lat, lng # Lesson 16 ends
+        
 
 if __name__ == "__main__":
     APP.run_server(

@@ -18,6 +18,7 @@ from dash import html
 #import numpy as np # Lesson 7
 #import pingrid # Lesson 10
 #import os # Lesson 10
+#from ui_components import Block # Lesson 16
 
 
 def app_layout():

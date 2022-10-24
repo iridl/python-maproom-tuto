@@ -47,3 +47,5 @@ and then activate it. Discover Lesson 1 by running the application with:
 * Lesson 15 : Callback for Map Title
 
 * Lesson 16 : Location Selection
+
+* Lesson 17 : Plot Local Climatology

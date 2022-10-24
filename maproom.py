@@ -17,6 +17,7 @@ import layout
 #from dash.dependencies import Output, Input, State # Lesson 5
 #import xarray as xr # Lesson 5
 #import numpy as np # Lesson 9
+#import plotly.express as px # Lesson 17
 
 
 CONFIG = pingrid.load_config(os.environ["CONFIG"])

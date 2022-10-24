@@ -10,7 +10,9 @@ We are performing data analysis with [Xarray](https://xarray.dev/),
 The Tutorial reviews the following Lessons. To get started, after having installed
 conda, create the tutorial environment by running:
 
-`conda env create -f environment.yml`
+`conda create -n mr-tuto --file conda-osx-64.lock`
+
+(substituting osx or win for linux as appropriate)
 
 and then activate it. Discover Lesson 1 by running the application with:
 

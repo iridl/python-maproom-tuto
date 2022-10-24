@@ -18,6 +18,7 @@ import xarray as xr # Lesson 6
 import numpy as np # Lesson 7
 import pingrid # Lesson 10
 import os # Lesson 10
+from ui_components import Block # Lesson 16
 
 
 # Lesson 10 starts
@@ -40,10 +41,10 @@ def app_layout():
     # Lesson 7 starts
     half_res_y = np.abs(data["Y"][1] - data["Y"][0]) / 2
     half_res_x = np.abs(data["X"][1] - data["X"][0]) / 2
-    min_y = (data["Y"][[0, -1]].min() - half_res_y).values
-    max_y = (data["Y"][[0, -1]].max() + half_res_y).values
-    min_x = (data["X"][[0, -1]].min() - half_res_x).values
-    max_x = (data["X"][[0, -1]].max() + half_res_x).values # Lesson 7 ends
+    lat_min = (data["Y"][[0, -1]].min() - half_res_y).values
+    lat_max = (data["Y"][[0, -1]].max() + half_res_y).values
+    lon_min = (data["X"][[0, -1]].min() - half_res_x).values
+    lon_max = (data["X"][[0, -1]].max() + half_res_x).values # Lesson 7 ends
 
     return dbc.Container(
         [
@@ -51,7 +52,7 @@ def app_layout():
             dbc.Row(
                 [
                     dbc.Col(
-                        description_layout(),
+                        description_layout(lat_min, lat_max, lon_min, lon_max), # Lesson 16
                         sm=12,
                         md=4,
                         style={
@@ -68,10 +69,10 @@ def app_layout():
                                 dbc.Col(
                                     map_layout(
                                         center_of_the_map,
-                                        min_x,
-                                        min_y,
-                                        max_x,
-                                        max_y), # Lesson 6-7
+                                        lon_min,
+                                        lat_min,
+                                        lon_max,
+                                        lat_max), # Lesson 6-7
                                     width=12,
                                     style={
                                         "background-color": "white",
@@ -185,7 +186,7 @@ def navbar_layout():
     )
 
 
-def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
+def map_layout(center_of_the_map, lon_min, lat_min, lon_max, lat_max): # Lesson 6-7
     return dbc.Container(
         [
             html.H5(
@@ -230,6 +231,16 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
                         position="topleft",
                         id="layers_control",
                     ),
+                    # Lesson 16 starts
+                    dlf.LayerGroup(
+                        [
+                            dlf.Marker(
+                                id="loc_marker",
+                                position=center_of_the_map,
+                            )
+                        ],
+                        id="layers_group",
+                    ), # Lesson 16 ends
                     dlf.ScaleControl(
                         imperial=False,
                         position="bottomright"
@@ -246,7 +257,7 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
                 ],
                 id="map",
                 center=center_of_the_map, # Lesson 6
-                maxBounds=[[min_y, min_x],[max_y, max_x]], # Lesson 7
+                maxBounds=[[lat_min, lon_min],[lat_max, lon_max]], # Lesson 7
                 style={
                     "width": "100%",
                     "height": "50vh",
@@ -257,13 +268,56 @@ def map_layout(center_of_the_map, min_x, min_y, max_x, max_y): # Lesson 6-7
     )
     
     
-def description_layout():
+def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
     return dbc.Container(
         [
             html.H5(
                 [
                     "This is the Title of this Maproom",
                 ]
+            ),
+            Block("Pick a point",
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            dbc.FormFloating(
+                                [
+                                    dbc.Input(
+                                        id="lat_input",
+                                        min=lat_min,
+                                        max=lat_max,
+                                        type="number",
+                                    ),
+                                    dbc.Label(
+                                        "Latitude",
+                                        style={"font-size": "80%"},
+                                    ),
+                                ]
+                            ),
+                        ),
+                        dbc.Col(
+                            dbc.FormFloating(
+                                [
+                                    dbc.Input(
+                                        id="lng_input",
+                                        min=lon_min,
+                                        max=lon_max,
+                                        type="number",
+                                    ),
+                                    dbc.Label(
+                                        "Longitude",
+                                        style={"font-size": "80%"},
+                                    ),
+                                ]
+                            ),
+                        ),
+                        dbc.Button(
+                            id="submit_lat_lng",
+                            n_clicks=0,
+                            children='Submit'
+                        ),
+                    ],
+                ),
             ),
             html.Details(
                 [
@@ -725,6 +779,112 @@ def description_layout():
                             """
                             When you are done, commit your changes
                             and move on to Lesson 16.
+                            """
+                        ),
+                    ]),
+                ],
+            ),
+            html.Details(
+                [
+                    html.Summary("Lesson 16: Location Selection"),
+                    html.Div([
+                        html.P(
+                            """
+                            We fare going to set up a Marker to pick
+                            locations. The Marker will snap to the center
+                            of the data gridbox it was clicked in.
+                            Additionally, we will put up input text boxes
+                            controls to also select longitude and
+                            latitude by typing-in. 
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout's map component, add a dlf
+                            LayersGroup that will contain the Marker. Put
+                            it after the LayersControl as:
+                            """
+                        ),
+                        html.P(
+                            """
+                            dlf.LayerGroup(
+                                [
+                                    dlf.Marker(
+                                        id="loc_marker",
+                                        position=center_of_the_map,
+                                    )
+                                ],
+                                id="layers_group",
+                            ),
+                            """
+                        ),
+                        html.P(
+                            """
+                            Note that we are using center_of_the_map that
+                            we used earlier to center the map over our
+                            data to give a default position to the Marker.
+                            """
+                        ),
+                        html.P(
+                            """
+                            In layout's description component, we will
+                            add, after out text describing the Maproom
+                            the type-in controls as another mean to input
+                            latitude and longitude. We will use our UI
+                            component Block to make sure they keep tight
+                            together in the app. Below is an example
+                            adding the latitude control. Add that and
+                            include in another Col in the Block a control
+                            for longitude.
+                            """
+                        ),
+                        
+                        html.P(
+                            """
+                            Now that we have our Marker and control ready,
+                            in maproom, find the callback for
+                            pick_location and uncomment it. Note that we
+                            need to read data here again to get the data's
+                            longitude and latitude. Make sure the data
+                            reading is in accordance with the current
+                            state of your maproom.
+                            """
+                        ),
+                        html.P(
+                            """
+                            Block("Pick a point",
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            dbc.FormFloating(
+                                                [
+                                                    dbc.Input(
+                                                        id="lat_input",
+                                                        min=lat_min,
+                                                        max=lat_max,
+                                                        type="number",
+                                                    ),
+                                                    dbc.Label(
+                                                        "Latitude",
+                                                        style={"font-size": "80%"},
+                                                    ),
+                                                ]
+                                            ),
+                                        ),
+                                        dbc.Button(
+                                            id="submit_lat_lng",
+                                            n_clicks=0,
+                                            children='Submit'
+                                        ),
+                                    ],
+                                ),
+                            ),
+                            """
+                        ),
+                        html.P(
+                            """
+                            When you are done, commit your changes
+                            and move on to Lesson 17.
                             """
                         ),
                     ]),

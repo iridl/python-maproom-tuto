@@ -45,3 +45,5 @@ and then activate it. Discover Lesson 1 by running the application with:
 * Lesson 14 : Map Climatology for a given month
 
 * Lesson 15 : Callback for Map Title
+
+* Lesson 16 : Location Selection

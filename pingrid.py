@@ -39,6 +39,23 @@ def error_fig(error_msg="error"):
     )
 
 
+def sel_snap(spatial_array, lat, lng, dim_y="Y", dim_x="X"):
+    """Selects the spatial_array's closest spatial grid center to the lng/lat coordinate.
+    Raises an exception if lng/lat is outside spatial_array domain.
+    Assumes regularly spaced dimensions.
+    """
+    the_method = None
+    half_res_y = np.abs(spatial_array[dim_y][1] - spatial_array[dim_y][0]) / 2
+    half_res_x = np.abs(spatial_array[dim_x][1] - spatial_array[dim_x][0]) / 2
+    min_y = spatial_array[dim_y][[0, -1]].min()
+    max_y = spatial_array[dim_y][[0, -1]].max()
+    min_x = spatial_array[dim_x][[0, -1]].min()
+    max_x = spatial_array[dim_x][[0, -1]].max()
+    if lat >= min_y and lat <= max_y and lng >= min_x and lng <= max_x:
+        the_method = "nearest"
+    return spatial_array.sel(method=the_method, **{dim_x:lng, dim_y:lat})
+
+
 FuncInterp2d = Callable[[Iterable[np.ndarray]], np.ndarray]
 
 

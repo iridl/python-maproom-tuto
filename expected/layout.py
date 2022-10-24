@@ -8,7 +8,7 @@ It should not include any callbacks
 or directly reference the data be loaded into the maproom.
 """
 
-# Import libraries used
+# Import liBraries used
 import dash_bootstrap_components as dbc
 from dash import html
 
@@ -157,7 +157,7 @@ def navbar_layout():
                         clearable=False,
                         options=[
                             dict(label="January", value=1),
-                            dict(label="February", value=2),
+                            dict(label="FeBruary", value=2),
                             dict(label="March", value=3),
                             dict(label="April", value=4),
                             dict(label="May", value=5),
@@ -382,11 +382,9 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                             for background mapping.
                             """
                         ),
-                        html.P(
-                            """
-                            https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all"
+                        )),
                         html.P(
                             """
                             When you are done, commit your changes
@@ -409,7 +407,7 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                         html.P(
                             """
                             When you are done, commit your changes
-                            and move on to Lesson 4.
+                            and move on to Lesson 5.
                             """
                         ),
                     ]),
@@ -438,21 +436,15 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                             as well as scale_min and scale_max attributes, such as:
                             """
                         ),
-                        html.P(
-                            """
-                            data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP
-                            """
-                        ),
-                        html.P(
-                            """
-                            data.attrs["scale_min"] = data.min().values
-                            """
-                        ),
-                        html.P(
-                            """
-                            data.attrs["scale_max"] = data.max().values
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            [
+                                'data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP',
+                                html.Br(),
+                                'data.attrs["scale_min"] = data.min().values',
+                                html.Br(),
+                                'data.attrs["scale_max"] = data.max().values',
+                            ]
+                        )),
                         html.P(
                             """
                             Open layout.py and find the Map component.
@@ -470,22 +462,18 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                             Open config-sample.yaml and define the tiles prefix with:
                             """
                         ),
-                        html.P(
-                            """
-                            tile_pfx: /my_first_maproom/tile
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            "tile_pfx: /my_first_maproom/tile"
+                        )),
                         html.P(
                             """
                             Open maproom.py and define TILE_PFX
                             along with other prefixes definitions with:
                             """
                         ),
-                        html.P(
-                            """
-                            TILE_PFX = CONFIG["tile_pfx"]
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            'TILE_PFX = CONFIG["tile_pfx"]'
+                        )),
                         html.P(
                             """
                             When you are done, commit your changes
@@ -558,17 +546,23 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                             Add a dlf Colorbar component to the dlf Map with:
                             """
                         ),
-                        html.P(
-                            """
-                            dlf.Colorbar(
-                                id="colorbar",
-                                position="bottomleft",
-                                width=300,
-                                height=10,
-                                opacity=1,
-                            ),
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            [
+                                'dlf.Colorbar(',
+                                html.Br(),
+                                '   id="colorbar",',
+                                html.Br(),
+                                '   position="bottomleft",',
+                                html.Br(),
+                                '   width=300,',
+                                html.Br(),
+                                '   height=10,',
+                                html.Br(),
+                                '   opacity=1,',
+                                html.Br(),
+                                '),',
+                            ]
+                        )),
                         html.P(
                             """
                             In maproom.py, find the set_colorbar callback.
@@ -591,22 +585,20 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                     html.Div([
                         html.P(
                             """
-                            Add the following Output to the colorscale callback:
+                            Add the following Output to the colorscale callback to update attribute tickValues:
                             """
                         ),
-                        html.P(
-                            """
-                            [i for i in range(
-                                int(data.min().values),
-                                int(data.max().values) + 1
-                            ) if i % 10 == 0]
-                            """
-                        ),
-                        html.P(
-                            """
-                            Output("colorbar", "tickValues")
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            [
+                                "[i for i in range(",
+                                html.Br(),
+                                "   int(data.min().values),",
+                                html.Br(),
+                                "   int(data.max().values) + 1",
+                                html.Br(),
+                                ") if i % 10 == 0]",
+                            ]
+                        )),
                         html.P(
                             """
                             When you are done, commit your changes
@@ -805,19 +797,27 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                             it after the LayersControl as:
                             """
                         ),
-                        html.P(
-                            """
-                            dlf.LayerGroup(
-                                [
-                                    dlf.Marker(
-                                        id="loc_marker",
-                                        position=center_of_the_map,
-                                    )
-                                ],
-                                id="layers_group",
-                            ),
-                            """
-                        ),
+                        html.Code(html.Pre(
+                            [
+                                'dlf.LayerGroup(',
+                                html.Br(),
+                                '   [',
+                                html.Br(),
+                                '       dlf.Marker(',
+                                html.Br(),
+                                '           id="loc_marker",',
+                                html.Br(),
+                                '           position=center_of_the_map,',
+                                html.Br(),
+                                '       )',
+                                html.Br(),
+                                '   ],',
+                                html.Br(),
+                                '   id="layers_group",',
+                                html.Br(),
+                                '),',
+                            ]
+                        )),
                         html.P(
                             """
                             Note that we are using center_of_the_map that
@@ -850,37 +850,61 @@ def description_layout(lat_min, lat_max, lon_min, lon_max): # Lesson 16
                             state of your maproom.
                             """
                         ),
-                        html.P(
-                            """
-                            Block("Pick a point",
-                                dbc.Row(
-                                    [
-                                        dbc.Col(
-                                            dbc.FormFloating(
-                                                [
-                                                    dbc.Input(
-                                                        id="lat_input",
-                                                        min=lat_min,
-                                                        max=lat_max,
-                                                        type="number",
-                                                    ),
-                                                    dbc.Label(
-                                                        "Latitude",
-                                                        style={"font-size": "80%"},
-                                                    ),
-                                                ]
-                                            ),
-                                        ),
-                                        dbc.Button(
-                                            id="submit_lat_lng",
-                                            n_clicks=0,
-                                            children='Submit'
-                                        ),
-                                    ],
-                                ),
-                            ),
-                            """
-                        ),
+                        html.Code(html.Pre([
+                            'Block("Pick a point",',
+                            html.Br(),
+                            '    dbc.Row(',
+                            html.Br(),
+                            '        [',
+                            html.Br(),
+                            '            dbc.Col(',
+                            html.Br(),
+                            '                dbc.FormFloating(',
+                            html.Br(),
+                            '                    [',
+                            html.Br(),
+                            '                        dbc.Input(',
+                            html.Br(),
+                            '                            id="lat_input",',
+                            html.Br(),
+                            '                            min=lat_min,',
+                            html.Br(),
+                            '                            max=lat_max,',
+                            html.Br(),
+                            '                            type="number",',
+                            html.Br(),
+                            '                        ),',
+                            html.Br(),
+                            '                        dbc.Label(',
+                            html.Br(),
+                            '                            "Latitude",',
+                            html.Br(),
+                            '                            style={"font-size": "80%"},',
+                            html.Br(),
+                            '                        ),',
+                            html.Br(),
+                            '                    ],',
+                            html.Br(),
+                            '                ),',
+                            html.Br(),
+                            '            ),',
+                            html.Br(),
+                            '            dbc.Button(',
+                            html.Br(),
+                            '                id="submit_lat_lng",',
+                            html.Br(),
+                            '                n_clicks=0,',
+                            html.Br(),
+                            '                children="Submit",',
+                            html.Br(),
+                            '            ),',
+                            html.Br(),
+                            '        ],',
+                            html.Br(),
+                            '    ),',
+                            html.Br(),
+                            '),',
+                        ])),
                         html.P(
                             """
                             When you are done, commit your changes

@@ -74,10 +74,13 @@ def data_tiles(tz, tx, ty, variable, this_month): # Lesson 14
     data = xr.decode_cf(data, decode_times=True).rename(
         {"X": "lon", "Y": "lat"}
     )[variable] # .isel(T=-1) # Lesson 5, 14
-    data = data.groupby("T.month").mean().sel(month=int(this_month))
+    data = data.groupby("T.month").mean()
+    map_min = data.min().values
+    map_max = data.max().values
+    data = data.sel(month=int(this_month))
     data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP # Lesson 5 
-    data.attrs["scale_min"] = data.min().values
-    data.attrs["scale_max"] = data.max().values
+    data.attrs["scale_min"] = map_min
+    data.attrs["scale_max"] = map_max
     resp = pingrid.tile(data, tx, ty, tz)
     return resp # Lesson 5 ends
 
@@ -89,9 +92,8 @@ def data_tiles(tz, tx, ty, variable, this_month): # Lesson 14
     Output("colorbar", "max"),
     Output("colorbar", "tickValues"), # Lesson 9
     Input("variable", "value"),
-    Input("month", "value"), # Lesson 14
 )
-def set_colorbar(variable, this_month): # Lesson 14
+def set_colorbar(variable): # Lesson 14
     # Lesson 12 starts
     if variable == "pre":
         data_file = CONFIG["prcp_file"]
@@ -109,15 +111,17 @@ def set_colorbar(variable, this_month): # Lesson 14
     data = xr.decode_cf(data, decode_times=True).rename(
         {"X": "lon", "Y": "lat"}
     )[variable] # .isel(T=-1) # Lesson 5, 14
-    data = data.groupby("T.month").mean().sel(month=int(this_month))
+    data = data.groupby("T.month").mean()
+    map_min = data.min().values
+    map_max = data.max().values
     return (
         pingrid.to_dash_colorscale(pingrid.RAINBOW_COLORMAP),
-        data.min().values,
-        data.max().values,
+        map_min,
+        map_max,
         # Lesson 9 starts
         [i for i in range(
-            int(data.min().values),
-            int(data.max().values) + 1
+            int(map_min),
+            int(map_max) + 1
         ) if i % ticks_sample == 0] # Lesson 9 ends, 13
     ) # Lesson 8 ends
 

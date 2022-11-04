@@ -24,15 +24,16 @@ from ui_components import Block # Lesson 16
 # Lesson 10 starts
 CONFIG = pingrid.load_config(os.environ["CONFIG"])
 DATA_DIR = CONFIG["data_dir"] # Lesson 10 ends
-
+data_file = CONFIG["prcp_file"]
 
 def app_layout():
     
     # Lesson 6 starts
-    data = xr.open_dataarray(
+    data = xr.open_dataset(
         # "data/CRUprcp.nc", Lesson 10 starts
-        DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
-        decode_times=False
+        #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
+        DATA_DIR + data_file, # Lesson 12
+        decode_times=False,
     )
     center_of_the_map = [
         ((data["Y"][int(data["Y"].size/2)].values)),
@@ -144,10 +145,10 @@ def navbar_layout():
                         id="variable",
                         clearable=False,
                         options=[
-                            dict(label="Precipitation", value="prcp"),
-                            dict(label="Temperature", value="temp"), # Lesson 12
+                            dict(label="Precipitation", value="pre"),
+                            dict(label="Temperature", value="tmp"), # Lesson 12
                         ],
-                        value="prcp",
+                        value="pre",
                     )
                 ],
                 style={

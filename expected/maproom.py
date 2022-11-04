@@ -57,24 +57,30 @@ def data_tile_url_callback(variable, month): # Lesson 14
 
 # Lesson 5 starts
 @SERVER.route(
-    f"{TILE_PFX}/<int:tz>/<int:tx>/<int:ty>/<variable>/<month>" # Lesson 14
+    f"{TILE_PFX}/<int:tz>/<int:tx>/<int:ty>/<variable>/<this_month>" # Lesson 14
 )
-def data_tiles(tz, tx, ty, variable, month): # Lesson 14
-    # Lesson 12 starts
-    if variable == "prcp":
+def data_tiles(tz, tx, ty, variable, this_month): # Lesson 14
+    if variable == "pre":
         data_file = CONFIG["prcp_file"]
     else:
         data_file = CONFIG["temp_file"] # Lesson 12 ends
-    data = xr.open_dataarray(
+    data = xr.open_dataset(
         # "data/CRUprcp.nc", Lesson 10 starts
         #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
         DATA_DIR + data_file, # Lesson 12
         decode_times=False
-    ).rename({"X": "lon", "Y": "lat"}) # .isel(T=-1) # Lesson 5, 14
-    data = data.groupby(data["T"] % 12 + 0.5).mean().sel(T=month) # Lesson 14
+    )
+    data["T"].attrs["calendar"] = "360_day"
+    data = xr.decode_cf(data, decode_times=True).rename(
+        {"X": "lon", "Y": "lat"}
+    )[variable] # .isel(T=-1) # Lesson 5, 14
+    data = data.groupby("T.month").mean()
+    map_min = data.min().values
+    map_max = data.max().values
+    data = data.sel(month=int(this_month))
     data.attrs["colormap"] = pingrid.RAINBOW_COLORMAP # Lesson 5 
-    data.attrs["scale_min"] = data.min().values
-    data.attrs["scale_max"] = data.max().values
+    data.attrs["scale_min"] = map_min
+    data.attrs["scale_max"] = map_max
     resp = pingrid.tile(data, tx, ty, tz)
     return resp # Lesson 5 ends
 
@@ -86,31 +92,36 @@ def data_tiles(tz, tx, ty, variable, month): # Lesson 14
     Output("colorbar", "max"),
     Output("colorbar", "tickValues"), # Lesson 9
     Input("variable", "value"),
-    Input("month", "value"), # Lesson 14
 )
-def set_colorbar(variable, month): # Lesson 14
+def set_colorbar(variable): # Lesson 14
     # Lesson 12 starts
-    if variable == "prcp":
+    if variable == "pre":
         data_file = CONFIG["prcp_file"]
         ticks_sample = 10 # Lesson 13
     else:
         data_file = CONFIG["temp_file"] # Lesson 12 ends
         ticks_sample = 1 # Lesson 13
-    data = xr.open_dataarray(
+    data = xr.open_dataset(
         # "data/CRUprcp.nc", Lesson 10 starts
         #DATA_DIR + CONFIG["prcp_file"], # Lesson 10 ends
         DATA_DIR + data_file, # Lesson 12
         decode_times=False
-    ) #.isel(T=-1) Lesson 14
-    data = data.groupby(data["T"] % 12 + 0.5).mean().sel(T=month) # Lesson 14
+    )
+    data["T"].attrs["calendar"] = "360_day"
+    data = xr.decode_cf(data, decode_times=True).rename(
+        {"X": "lon", "Y": "lat"}
+    )[variable] # .isel(T=-1) # Lesson 5, 14
+    data = data.groupby("T.month").mean()
+    map_min = data.min().values
+    map_max = data.max().values
     return (
         pingrid.to_dash_colorscale(pingrid.RAINBOW_COLORMAP),
-        data.min().values,
-        data.max().values,
+        map_min,
+        map_max,
         # Lesson 9 starts
         [i for i in range(
-            int(data.min().values),
-            int(data.max().values) + 1
+            int(map_min),
+            int(map_max) + 1
         ) if i % ticks_sample == 0] # Lesson 9 ends, 13
     ) # Lesson 8 ends
 
@@ -122,7 +133,7 @@ def set_colorbar(variable, month): # Lesson 14
     Input("month", "value"),
 )
 def write_map_title(variable, month):
-    if variable == "prcp":
+    if variable == "pre":
         variable = "Precipitation"
     else:
         variable = "Temperature"
@@ -188,7 +199,7 @@ def pick_location(n_clicks, click_lat_lng, latitude, longitude):
 def create_plot(marker_loc, variable):
     lat = marker_loc[0]
     lng = marker_loc[1]
-    if variable == "prcp":
+    if variable == "pre":
         data_file = CONFIG["prcp_file"]
         variable = "Precipition"
     else:
